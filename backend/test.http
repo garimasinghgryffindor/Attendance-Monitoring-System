@@ -1,0 +1,9 @@
+POST http://localhost:4000/addStudent
+Content-Type: application/json
+
+{
+    "fName":"Riya",
+    "lName":"Singh",
+    "studentID":"20022036",
+    "password":"riyaXYZ"
+}
