@@ -1,9 +1,7 @@
-POST http://localhost:4000/addStudent
+POST http://localhost:4000/section
 Content-Type: application/json
 
 {
-    "fName":"Riya",
-    "lName":"Singh",
-    "studentID":"20022036",
-    "password":"riyaXYZ"
+    "section":"F",
+    "timeTable":[{"day":"Monday", "dayTimeTable":[{"startTime":"2019-03-10T08:00:00","endTime":"2019-03-10T08:55:00","subjectCode":"tcs-601","teacherID":"t01"},{"startTime":"2019-03-10T08:55:00","endTime":"2019-03-10T09:50:00","subjectCode":"tcs-602","teacherID":"t02"},{"startTime":"2019-03-10T20:00:00","endTime":"2019-03-10T20:55:00","subjectCode":"tcs-604","teacherID":"t04"}]} ]
 }

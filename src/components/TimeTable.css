@@ -1,0 +1,18 @@
+th,td {
+    padding-left: 110px;
+    padding-right: 110px;
+    font-size: large;
+}
+
+.table-rows {
+    border: 20px red;
+}
+
+.even {
+    background-color: lightcoral;
+}
+
+.odd {
+    background-color: Lightgreen;
+}
+

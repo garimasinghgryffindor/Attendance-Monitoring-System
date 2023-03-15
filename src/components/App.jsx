@@ -1,10 +1,20 @@
 import React, { useState } from "react";
-import Form from "./Form";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+//importing components
+import Form from "./Form";
+import Student from "./Student";
+
 
 function App() {
 
     const [isLogin , setUserLogin] = useState(false);
+
+    const [studentID, setStudentID] = useState("");
+
+    function loginStudentWithID(id) {
+        setStudentID(id);
+    }
 
     function loginTheUser() {
         setUserLogin(true);
@@ -22,6 +32,7 @@ function App() {
               <div>
                 <Form 
                     onLogin={loginTheUser}
+                    setStudentID={loginStudentWithID}
                 />
               </div>
             }
@@ -32,7 +43,8 @@ function App() {
             path="/afterLogin"
             element={
                <div>
-                <h1>User has successfully logged in!!</h1>
+                    {isLogin && <Student studentID={studentID}/>}
+                    {!isLogin && <h1>User not logged in !</h1>}
               </div>
             }
           ></Route>

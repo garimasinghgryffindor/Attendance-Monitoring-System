@@ -26,6 +26,7 @@ function Form(props) {
                 setPassword("");
                 navigate('/');
             } else {
+                props.setStudentID(res.data.studentID);
                 console.log("Result DATA:");
                 console.log(res.data);
                 props.onLogin();

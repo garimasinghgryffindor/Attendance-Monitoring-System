@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 //import models
 const studentLoginModelCopy = require("./models/studentLogin");
 const teacherLoginModelCopy = require("./models/teacherLogin");
+const sectionModelCopy = require('./models/sections');
 
 
 app.post("/addStudent", function(req, res) {
@@ -34,6 +35,7 @@ app.post("/addStudent", function(req, res) {
         fName : req.body.fName,
         lName : req.body.lName,
         studentID : Number(req.body.studentID),
+        section: req.body.section,
         password : req.body.password,
     });
 
@@ -48,47 +50,53 @@ app.post("/addStudent", function(req, res) {
 });
 
 
-//app.post("/addTeacher", upload.single("file"), async function(req, res) {
+app.post("/addTeacher", function(req, res) {
 
-//    try {
+    const newTeacher = new teacherLoginModelCopy({
+        fName : req.body.fName,
+        lName : req.body.lName,
+        teacherID : req.body.teacherID,
+        imgUrl : req.body.imgUrl,
+    });
 
-//        const
+    newTeacher.save()
+    .then(data => {
+        res.json(data)
+    })
+    .catch(error => {
+        res.json(error)
+    });
 
-//        let obj = {
+});
 
-//            img: {
-//                data: req.img.buffer,
-//                contentType: req.img.mimetype
-//            },
-//            imgName: req.body.imgName
-//        };
+app.post("/section", function(req, res) {
 
-//    }
-//    catch (error) {
-//        console.log(error);
-//        res.status(500).send("Server Error");
-//    }
+    const newSection = new sectionModelCopy({
+        section: req.body.section,
+        timeTable: req.body.timeTable
+    });
 
-//    const newTeacher = new teacherLoginModelCopy({
-//        fName : req.body.fName,
-//        lName : req.body.lName,
-//        studentID : Number(req.body.studentID),
-//        password : req.body.password,
-//    });
+    newSection.save()
+    .then(data => {
+        res.json(data)
+    })
+    .catch(error => {
+        res.json(error)
+    })
+});
 
-//    newStudent.save()
-//    .then(data => {
-//        res.json(data)
-//    })
-//    .catch(error => {
-//        res.json(error)
-//    });
-
-//});
+app.post("/getTimeTable", function(req, res) {
+    const section = req.body.section;
+    sectionModelCopy.findOne({section: section}).then(val => {res.send(val); console.log(val);});
+});
 
 
 app.post("/loginStudent" , function(req, res) {
     studentLoginModelCopy.findOne({studentID: req.body.studentID, password: req.body.password}).then(val => {res.send(val); console.log(val);});
+});
+
+app.post("/getStudentData", function(req, res) {
+    studentLoginModelCopy.findOne({studentID: req.body.studentID}).then(val => {res.send(val); console.log(val);});
 });
 
 app.listen(4000 , function() {

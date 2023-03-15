@@ -14,14 +14,10 @@ const teacherLoginModelTemplate = new mongoose.Schema({
         required: true,
         unique: true
     },
-    imgName: {
+    imgUrl: {
         type: String,
-        required: true
-    },
-    img: {
-        data: Buffer,
-        contentType: String,
-        required: true
+        required: true,
+        match: [/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/ , 'Please enter a valid url!']
     }
 });
 

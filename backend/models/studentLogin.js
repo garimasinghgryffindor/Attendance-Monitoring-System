@@ -14,6 +14,10 @@ const studentLoginModelTemplate = new mongoose.Schema({
         require: true,
         unique: true
     },
+    section: {
+        type: String,
+        required: true
+    },
     password: {
         type: String,
         required: true
