@@ -76,8 +76,8 @@ function Student(props) {
         //console.log(result);
         result = result[0];
         setTimeTable(result.dayTimeTable);
-        console.log("HERE ARE THE RESULTS.");
-        console.log(day);
+        //console.log("HERE ARE THE RESULTS.");
+        //console.log(day);
     });
 
 
@@ -91,7 +91,7 @@ function Student(props) {
 
         <div>
             <center>
-                <table className="timeTable">
+                <table className="timeTable" cellpadding="50px">
                     {timeTable.map(createTimeTable)}
                 </table>
             </center>

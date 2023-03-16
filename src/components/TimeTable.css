@@ -2,6 +2,7 @@ th,td {
     padding-left: 110px;
     padding-right: 110px;
     font-size: large;
+    text-align: center;
 }
 
 .table-rows {
@@ -15,4 +16,8 @@ th,td {
 .odd {
     background-color: Lightgreen;
 }
+
+/*table {
+    width: 100%;
+}*/
 
