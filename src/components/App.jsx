@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 //importing components
 import Form from "./Form";
+import Header from "./Header";
+import Footer from "./Footer";
 import Student from "./Student";
 
 
@@ -30,10 +32,12 @@ function App() {
             path="/"
             element={
               <div>
+                <Header/>
                 <Form 
                     onLogin={loginTheUser}
                     setStudentID={loginStudentWithID}
                 />
+                <Footer/>
               </div>
             }
           ></Route>
@@ -43,8 +47,10 @@ function App() {
             path="/afterLogin"
             element={
                <div>
+                    <Header/>
                     {isLogin && <Student studentID={studentID}/>}
                     {!isLogin && <h1>User not logged in !</h1>}
+                    <Footer/>
               </div>
             }
           ></Route>

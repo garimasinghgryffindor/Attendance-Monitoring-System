@@ -5,7 +5,10 @@ th,td {
     text-align: center;
 }
 
+/*not workin*/
 .table-rows {
+    padding-left: 100px;
+    padding-right: 100px;
     border: 20px red;
 }
 
