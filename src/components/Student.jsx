@@ -5,16 +5,6 @@ import { useNavigate } from "react-router-dom";
 import TimeTable from "./TimeTable";
 import "./Student.css"
 
-function createTimeTable(tt, index) {
-    return (
-        <TimeTable 
-            subjectCode={tt.subjectCode}
-            startTime={tt.startTime}
-            endTime={tt.endTime}
-            index={index}
-        />
-    );
-}
 
 function Student(props) {
     let navigate = useNavigate();
@@ -30,6 +20,20 @@ function Student(props) {
         setSection(res.data.section);
     })
 
+
+
+    function createTimeTable(tt, index) {
+        return (
+            <TimeTable 
+                studentID={studentID}
+                subjectCode={tt.subjectCode}
+                startTime={tt.startTime}
+                endTime={tt.endTime}
+                marked={tt.presentOrNot}
+                index={index}
+            />
+        );
+    }
 
 
     //creating the current day time table for the current section
@@ -59,26 +63,22 @@ function Student(props) {
     }
 
 
-    const url2 = "http://localhost:4000/getTimeTable";
+    const url2 = "http://localhost:4000/getStudentTimeTable";
     var result;
 
     axios
-    .post(url2, {section: section})
+    .post(url2, {studentID: studentID})
     .then(function(res) {
         //setTimeTable(res.data.timeTable);
         //res = res[currDay];
-        result = res.data.timeTable;
-        result = result.filter(function(x) {
-            return x.day === day;
-        });
+        result = res.data
 
         //console.log("HERE ARE THE RESULTS.");
         //console.log(result);
-        result = result[0];
-        setTimeTable(result.dayTimeTable);
-        //console.log("HERE ARE THE RESULTS.");
-        //console.log(day);
+        setTimeTable(result);
+        //console.log(result);
     });
+
 
 
   return (

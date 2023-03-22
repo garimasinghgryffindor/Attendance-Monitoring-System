@@ -2,11 +2,37 @@ POST http://localhost:4000/addStudent
 Content-Type: application/json
 
 {
+    "fName":"Garima",
+    "lName":"Singh",
+    "studentID":"20022014",
+    "section":"F",
+    "password":"joeXYZ",
+    "imgUrl":"https://drive.google.com/file/d/1OyQorKMjCA6uPuQ6bmcy7CmSRAOHZB86/view?usp=sharing"
+}
+
+
+POST http://localhost:4000/addStudent
+Content-Type: application/json
+
+{
     "fName":"Monika",
     "lName":"Kumari",
-    "studentID":"20022195",
+    "studentID":"20022015",
     "section":"E",
-    "password":"monXYZ"
+    "password":"monXYZ",
+    "imgUrl":"https://drive.google.com/file/d/1rmRTex8BYhe7nQoaP1XukKLJYFY6KWR5/view?usp=sharing"
+}
+
+
+
+
+
+POST http://localhost:4000/section
+Content-Type: application/json
+
+{
+    "section":"F",
+    "timeTable":[{"day":"Monday", "dayTimeTable":[{"startTime":"2019-03-10T08:00:00","endTime":"2019-03-10T08:55:00","subjectCode":"tcs-601","teacherID":"t01"},{"startTime":"2019-03-10T08:55:00","endTime":"2019-03-10T09:50:00","subjectCode":"tcs-602","teacherID":"t02"},{"startTime":"1552248000000","endTime":"1552251300000","subjectCode":"tcs-604","teacherID":"t04"},{"startTime":"2019-03-10T12:00:00","endTime":"2019-03-10T13:00:00","subjectCode":"tcs-691","teacherID":"t91"}]} ]
 }
 
 
@@ -16,7 +42,20 @@ Content-Type: application/json
 
 {
     "section":"F",
-    "timeTable":[{"day":"Monday", "dayTimeTable":[{"startTime":"2019-03-10T08:00:00","endTime":"2019-03-10T08:55:00","subjectCode":"tcs-601","teacherID":"t01"},{"startTime":"2019-03-10T08:55:00","endTime":"2019-03-10T09:50:00","subjectCode":"tcs-602","teacherID":"t02"},{"startTime":"1552248000000","endTime":"1552251300000","subjectCode":"tcs-604","teacherID":"t04"}]} ]
+    "timeTable":[{"day":"Monday", "dayTimeTable":[{"startTime":"2019-03-10T08:00:00","endTime":"2019-03-10T08:55:00","subjectCode":"tcs-601","teacherID":"t01"},{"startTime":"2019-03-10T08:55:00","endTime":"2019-03-10T09:50:00","subjectCode":"tcs-602","teacherID":"t02"},{"startTime":"1552248000000","endTime":"1552251300000","subjectCode":"tcs-604","teacherID":"t04"},{"startTime":"2019-03-10T11:30:00","endTime":"2019-03-10T14:00:00","subjectCode":"tcs-691","teacherID":"t91"}]} ]
+}
+
+
+
+
+POST http://localhost:4000/addTeacher
+Content-Type: application/json
+
+{
+    "fName":"Anshika",
+    "lName":"Lambhe",
+    "teacherID":"t01",
+    "imgUrl":"https://drive.google.com/file/d/1_e28k6NnEiQ7XyxcK7nqycHOkq4htGm-/view?usp=sharing"
 }
 
 

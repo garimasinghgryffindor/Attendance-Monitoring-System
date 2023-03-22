@@ -1,5 +1,24 @@
 const mongoose = require('mongoose');
 
+const attendanceTemplate = new mongoose.Schema({
+    startTime: {
+        type: Date,
+        required: true
+    },
+    endTime: {
+        type: Date,
+        required: true
+    },
+    subjectCode: {
+        type: String,
+        required: true
+    },
+    presentOrNot: {
+        type: Boolean,
+        default: false
+    }
+});
+
 const studentLoginModelTemplate = new mongoose.Schema({
     fName: {
         type: String,
@@ -21,6 +40,14 @@ const studentLoginModelTemplate = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    imgUrl: {
+        type: String,
+        required: true,
+        match: [/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/ , 'Please enter a valid url!']
+    },
+    attendance: {
+        type: [attendanceTemplate]
     }
 });
 
