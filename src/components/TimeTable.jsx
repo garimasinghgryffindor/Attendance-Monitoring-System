@@ -1,29 +1,35 @@
-import React , {useState} from 'react'
+import React , {useState, useRef} from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { redirect } from "react-router-dom";
+import Sketch from "react-p5";
+import Webcam from 'react-webcam'
 
 import formatAMPM from './formatAMPM'
 import "./TimeTable.css"
+
+//let video;
 
 function TimeTable(props) {
     
     const [allowedLocation , setAllowedLocation] = useState(false);
 
+    //const []
+
+
+
     var bg = props.index %2 === 0 ? "lightgreen" : "lightcoral";
     var allowed = false;
 
+    let navigate = useNavigate();
 
 
-    // marking attendance here
-    async function markAttendance() {
-        let url = "http://localhost:4000/markAttendance/"+props.studentID+"/"+props.startTime+"/"+props.endTime+"/"+props.subjectCode;
-        console.log(url);
-        await axios.patch(url);
-        console.log(props.studentID);
-        console.log(props.startTime);
-        console.log(props.endTime);
-    }
+
+    //props.hasCaptured ? console.log("IMAGE GOT CAPTURED!") : console.log("");
+
+
+    
+
 
 
     // getting the location of the user and comparing it with the location of the univerisity
@@ -58,9 +64,10 @@ function TimeTable(props) {
             <th>{props.subjectCode}</th>
             <td>{formatAMPM(props.startTime)}</td>
             <td>{formatAMPM(props.endTime)}</td>
-            <td>{allowed && allowedLocation ? <p className="markingLink" onClick={markAttendance}>Mark Attendance</p> : <Link style={{color: allowedStylings, textDecoration: "dashed"}} to="/afterLogin">Mark Attendance</Link>}</td>
+            <td>{allowed && allowedLocation ? <p className="markingLink" onClick={() => { props.setClickedIndex(props.index); props.openTheWebCam() }}>Mark Attendance</p> : <Link style={{color: allowedStylings, textDecoration: "dashed"}} to="/afterLogin">Mark Attendance</Link>}</td>
             <td>{props.marked ? <img className="marked" src="Images/check.png" /> : <img className="marked" src="Images/close.png"/>}</td>
         </tr>
+        
     </div>
   );
 

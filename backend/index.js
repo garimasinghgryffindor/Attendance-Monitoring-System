@@ -59,6 +59,11 @@ app.get("/getAttendance/:studentID/:startTime/:endTime/:subjectCode", function(r
 }); 
 
 
+app.get("/getImage/:studentID", function(req, res) {
+    studentLoginModelCopy.findOne({studentID: req.params.studentID}).then(val=> {res.send(val.imgUrl); console.log(val.imgUrl);});
+});
+
+
 app.patch("/markTodaysAttendance", function(req, res) {
     var students;
     
@@ -206,8 +211,8 @@ app.post("/getStudentTimeTable", function(req, res) {
     ).then(result => {
         result = result[0];
         res.send(result.attendance);
-        //console.log(result.attendance);
-    })
+        console.log(result.attendance);
+    });
 });
 
 app.post("/loginStudent" , function(req, res) {
@@ -221,5 +226,9 @@ app.post("/getStudentData", function(req, res) {
 app.listen(4000 , function() {
     console.log("Server successfully connected on port 4000.");
 });
+
+
+
+
 
 
