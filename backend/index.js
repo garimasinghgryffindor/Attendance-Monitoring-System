@@ -122,9 +122,10 @@ app.patch("/markTodaysAttendance", function(req, res) {
                     //console.log(endTime);
 
                     var subjectCode = result2[j].subjectCode;
+                    var teacherID = result2[j].teacherID;
                     studentLoginModelCopy.updateOne(
                         {studentID: studentID, },
-                        {$push: {"attendance" : {"startTime": startTime, "endTime": endTime, "subjectCode": subjectCode, "presentOrNot": false}}},
+                        {$push: {"attendance" : {"startTime": startTime, "endTime": endTime, "subjectCode": subjectCode, "presentOrNot": false, "teacherID": teacherID}}},
                         {upsert: true}
                     )
                     .catch(error => {

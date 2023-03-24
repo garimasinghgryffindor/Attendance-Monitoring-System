@@ -1,7 +1,11 @@
-POST http://localhost:4000/section
+POST http://localhost:4000/addStudent
 Content-Type: application/json
 
 {
-    "section":"F",
-    "timeTable":[{"day":"Monday", "dayTimeTable":[{"startTime":"2019-03-10T08:00:00","endTime":"2019-03-10T08:55:00","subjectCode":"tcs-601","teacherID":"t01"},{"startTime":"2019-03-10T08:55:00","endTime":"2019-03-10T09:50:00","subjectCode":"tcs-602","teacherID":"t02"},{"startTime":"1552248000000","endTime":"1552251300000","subjectCode":"tcs-604","teacherID":"t04"},{"startTime":"2019-03-10T11:30:00","endTime":"2019-03-10T23:00:00","subjectCode":"tcs-691","teacherID":"t91"}]} ]
+    "fName":"Monika",
+    "lName":"Kumari",
+    "studentID":"20022015",
+    "section":"E",
+    "password":"monXYZ",
+    "imgUrl":"https://drive.google.com/file/d/1rmRTex8BYhe7nQoaP1XukKLJYFY6KWR5/view?usp=sharing"
 }

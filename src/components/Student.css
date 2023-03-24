@@ -1,3 +1,8 @@
 /*table {
     width: 100%;
 }*/
+
+.verificationMsg {
+    font-size: larger;
+    color: brown;
+}

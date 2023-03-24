@@ -18,7 +18,7 @@ function Student(props) {
     const [clicked, setClicked] = useState(false);
     //const [imageCaptured, setImageCaptured] = useState(false);
     const [picture, setPicture] = useState('')
-    //const [verified, setVerified] = useState(false);
+    const [studentVerified, setStudentVerified] = useState(false);
     const [subIndex, setSubIndex] = useState(0);
 
 
@@ -56,104 +56,16 @@ function Student(props) {
 
 
 
-    // marking attendance here
-    async function markAttendance() {
-        let url = "http://localhost:4000/markAttendance/"+studentID+"/"+timeTable[subIndex].startTime+"/"+timeTable[subIndex].endTime+"/"+timeTable[subIndex].subjectCode;
-        console.log("MARKING ATTENDANCE URL");
-        console.log(url);
-        await axios.patch(url);
-        console.log(props.studentID);
-        console.log(props.startTime);
-        console.log(props.endTime);
-    }
-
-
-
-
-
-    // facial verification function
-    async function facialVerification() {
-
-
-        // getting the original image
-        //const url4="http://localhost:4000/getImage/"+studentID;
-
-        //const originalImageUrl = await axios.get(url4);
-
-        //console.log("Getting url in front end");
-        //console.log(originalImageUrl.data);
-        // getting the original image ends here
-
-
-
-       // verification over here
-
-
-       const data = picture;
-       const options = {
-           method: 'POST',
-           headers: {
-             'Content-Type': 'application/json',
-             "Access-Control-Allow-Origin": "*",
-             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
-           },
-           body: JSON.stringify(data)
-       };
-
-       const url5 = "http://localhost:5000/verify";
-
-       axios.post(url5, {'image64':data, 'studentID':studentID.toString()}, options).then(function(res) {
-           console.log("Match result");
-           console.log(res.data);
-           console.log(res.data.identified);
-           if(res.data.identified==='true') {
-                //setVerified(true);
-                //console.log("I am here!!! ayyyyyyaaayyyyy");
-                markAttendance();
-           }
-       });
-       
-    //   verified && 
-
-   }
-
-
-
-    const capture = React.useCallback(async () => {
-        const image64 = await webcamRef.current.getScreenshot();
-        console.log(image64);
-        setPicture(image64);
-        console.log(picture);
-        
-    });
-    setInterval(capture, 100);
-
-
-
     const url = "http://localhost:4000/getStudentData";
 
     axios
     .post(url, {studentID: props.studentID})
     .then(function(res) {
         setSection(res.data.section);
-    })
+    });
 
 
 
-    function createTimeTable(tt, index) {
-        return (
-            <TimeTable 
-                studentID={studentID}
-                subjectCode={tt.subjectCode}
-                startTime={tt.startTime}
-                endTime={tt.endTime}
-                marked={tt.presentOrNot}
-                index={index}
-                setClickedIndex={setClickedIndex}
-                openTheWebCam={openTheWebCam}
-            />
-        );
-    }
 
 
     //creating the current day time table for the current section
@@ -198,6 +110,187 @@ function Student(props) {
 
 
 
+
+
+
+    // marking attendance here
+    async function markAttendance() {
+        let url = "http://localhost:4000/markAttendance/"+studentID+"/"+timeTable[subIndex].startTime+"/"+timeTable[subIndex].endTime+"/"+timeTable[subIndex].subjectCode;
+        console.log("MARKING ATTENDANCE URL");
+        console.log(url);
+        await axios.patch(url);
+        console.log(props.studentID);
+        console.log(props.startTime);
+        console.log(props.endTime);
+    }
+
+
+
+
+
+    // facial verification function
+    async function facialVerificationStudent() {
+
+
+        // getting the original image
+        //const url4="http://localhost:4000/getImage/"+studentID;
+
+        //const originalImageUrl = await axios.get(url4);
+
+        //console.log("Getting url in front end");
+        //console.log(originalImageUrl.data);
+        // getting the original image ends here
+
+
+
+       // verification over here
+
+
+       const data = picture;
+       const options = {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json',
+             "Access-Control-Allow-Origin": "*",
+             "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+           },
+           body: JSON.stringify(data)
+       };
+
+       const url5 = "http://localhost:5000/verify";
+
+       axios.post(url5, {'image64':data, 'ID':studentID.toString()}, options).then(function(res) {
+           console.log("Match result");
+           console.log(res.data);
+           console.log(res.data.identified);
+           if(res.data.identified==='true') {
+                setStudentVerified(true);
+                var element = document.getElementsByClassName('verificationMsg')[0];
+                console.log(element);
+                element.innerHTML = "Student Got Verified.";
+                function removeTheMsg(){
+                    var element = document.getElementsByClassName('verificationMsg')[0];
+                    element.innerHTML("");
+                }
+                setTimeout(removeTheMsg, 7000);
+
+                //console.log("I am here!!! ayyyyyyaaayyyyy");
+                //markAttendance();
+           } else {
+                setStudentVerified(false);
+                var element = document.getElementsByClassName('verificationMsg')[0];
+                console.log(element);
+                element.innerHTML = "Student Didn't got Verified.";
+                function removeTheMsg(){
+                    var element = document.getElementsByClassName('verificationMsg')[0];
+                    element.innerHTML("");
+                }
+                setTimeout(removeTheMsg, 7000);
+           }
+       });
+       
+    //   verified && 
+
+   }
+
+
+
+
+   async function facialVerificationTeacher() {
+
+
+        const data = picture;
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+            },
+            body: JSON.stringify(data)
+        };
+
+        const url5 = "http://localhost:5000/verify";
+
+        axios.post(url5, {'image64':data, 'ID':timeTable[subIndex].teacherID.toString()}, options).then(function(res) {
+            console.log("Match result");
+            console.log(res.data);
+            console.log(res.data.identified);
+            if(res.data.identified==='true') {
+                //setStudentVerified(true);
+                //console.log("I am here!!! ayyyyyyaaayyyyy");
+                var element = document.getElementsByClassName('verificationMsg')[0];
+                console.log(element);
+                element.innerHTML = "Teacher Got Verified.";
+                function removeTheMsg(){
+                    element.innerHTML("");
+                }
+                setTimeout(removeTheMsg, 7000);
+                markAttendance();
+            } else {
+                var element = document.getElementsByClassName('verificationMsg')[0];
+                console.log(element);
+                element.innerHTML = "Teacher Didn't got Verified.";
+                function removeTheMsg(){
+                    element.innerHTML("");
+                }
+                setTimeout(removeTheMsg, 7000);
+            }
+        });
+        
+        //   verified && 
+
+    }
+
+
+
+
+
+
+    const capture = React.useCallback(async () => {
+        const image64 = await webcamRef.current.getScreenshot();
+        //console.log(image64);
+        setPicture(image64);
+        //console.log(picture);
+        
+    });
+    setInterval(capture, 100);
+
+
+
+    function verifyStudent() {
+        //capture(); 
+        facialVerificationStudent();
+    }
+
+
+    function verifyTeacher() {
+        //capture();
+        facialVerificationTeacher()
+    }
+    
+
+
+
+    function createTimeTable(tt, index) {
+        return (
+            <TimeTable 
+                studentID={studentID}
+                subjectCode={tt.subjectCode}
+                startTime={tt.startTime}
+                endTime={tt.endTime}
+                marked={tt.presentOrNot}
+                index={index}
+                setClickedIndex={setClickedIndex}
+                openTheWebCam={openTheWebCam}
+            />
+        );
+    }
+
+
+    
+
+
   return (
     <div>
         <h1>User has successfully logged in!!</h1>
@@ -205,7 +298,9 @@ function Student(props) {
         <h3>Section {section}</h3>
         <br/>
         <br/>
-
+        <center>
+            <p className="verificationMsg"></p>
+        </center>
         <div>
             <center>
                 <table className="timeTable" cellpadding="50px">
@@ -222,7 +317,7 @@ function Student(props) {
                     screenshotFormat="image/jpeg"
                     videoConstraints={videoConstraints}
                 /><br/><button onClick={closeTheWebCam}>Close the Camera</button> 
-                <br/><button onClick={async (e) => {e.preventDefault(); capture(); facialVerification();}} >Capture</button></div>}
+                <br/><button onClick={async (e) => {e.preventDefault(); !studentVerified ? verifyStudent() : verifyTeacher() }} >Capture</button></div>}
                 <br/><br/>
                 {picture == '' ? null: <img src={picture}/>}
             </center>

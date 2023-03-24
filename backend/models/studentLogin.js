@@ -13,6 +13,10 @@ const attendanceTemplate = new mongoose.Schema({
         type: String,
         required: true
     },
+    teacherID: {
+        type: String,
+        required: true
+    },
     presentOrNot: {
         type: Boolean,
         default: false
